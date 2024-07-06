@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>ReduceThis</title>
-  <style>
-    body { min-width: 200px; font-family: Arial, sans-serif; }
-    #status { margin-top: 10px; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>reduceThis</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>ReduceThis</h2>
-  <div>
-    <label for="newText">Enter new text:</label>
-    <input type="text" id="newText">
-    <button id="changeBtn">Change Text</button>
+  <div class="color-picker">
+    <div class="color-selector">
+      <div class="color-option red" data-color="#ff0000"></div>
+      <div class="color-option green" data-color="#00ff00"></div>
+      <div class="color-option blue" data-color="#0000ff"></div>
+    </div>
+    <div class="range-selector">
+      <input type="range" min="0" max="100" value="80" class="range-input" />
+      <div class="range-output">80</div>
+    </div>
   </div>
-  <div id="status"></div>
   <script src="popup.js"></script>
 </body>
 </html>
