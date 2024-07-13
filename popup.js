@@ -12,10 +12,17 @@ colorOptions.forEach((option) => {
 });
 
 rangeInput.addEventListener("input", () => {
-  rangeOutput.textContent = rangeInput.value;
+  const percentage = rangeInput.value;
+  rangeOutput.textContent = percentage + "%";
+  
+  //browser.storage.local.set({ kitten, monster }).then(setItem, onError);
+
+  
 });
 
 function updateColorPreview(color) {
   document.querySelector(".color-preview").style.backgroundColor = color;
   colorCode.value = color;
 }
+
+
