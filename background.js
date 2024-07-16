@@ -21,14 +21,21 @@ async function changeSelectedText() {
 
   // Get the stored percentage value
   const rangeInput = document.querySelector(".range-input");
+  console.log(rangeInput);
   const percentage = rangeInput ? rangeInput.value : 50; // Default to 50% if not set
+
   const reducePercentage = 50 + percentage * 0.5;
+  console.log(reducePercentage);
 
   const textInput = selection.toString();
-  const wordsReduce = (1 - reducePercentage / 100) * textInput.length;
+  console.log(textInput.split(" ").length);
+  const wordsReduce =
+    (1 - reducePercentage / 100) * textInput.split(" ").length;
+
+  console.log("word count: ", wordsReduce);
 
   try {
-    const response = await fetch("https://localhost:3000/process", {
+    const response = await fetch("http://localhost:3000/process", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
