@@ -16,9 +16,15 @@
   cursor: pointer;
 }
 
-.color-option.red { background-color: #ff0000; }
-.color-option.green { background-color: #00ff00; }
-.color-option.blue { background-color: #00aaff; }
+.color-option.red {
+  background-color: #ff0000;
+}
+.color-option.green {
+  background-color: #00ff00;
+}
+.color-option.blue {
+  background-color: #00aaff;
+}
 
 .range-selector {
   flex: 1;

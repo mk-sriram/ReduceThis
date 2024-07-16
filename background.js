@@ -1,50 +1,50 @@
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "changeText",
-    title: "Reduce Text",
+    title: "Reduce This",
     contexts: ["selection"],
   });
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "changeText") {
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      func: changeSelectedText,
+    // Get the stored range value
+    browser.storage.local.get("rangePercentage").then((result) => {
+      const rangePercentage = result.rangePercentage || 50; // Default to 50% if not set
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: changeSelectedText,
+        args: [rangePercentage], // Pass the range percentage as an argument
+      });
     });
   }
 });
 
-async function changeSelectedText() {
+async function changeSelectedText(rangePercentage) {
   const selection = window.getSelection();
   if (!selection.rangeCount) return;
-
-  // Get the stored percentage value
-  const rangeInput = document.querySelector(".range-input");
-  console.log(rangeInput);
-  const percentage = rangeInput ? rangeInput.value : 50; // Default to 50% if not set
-
-  const reducePercentage = 50 + percentage * 0.5;
-  console.log(reducePercentage);
-
+  //console.log(rangePercentage);
+  const reducePercentage = 50 + rangePercentage * 0.5;
+  //console.log(reducePercentage);
   const textInput = selection.toString();
-  console.log(textInput.split(" ").length);
+  //console.log(textInput.split(" ").length);
   const wordsReduce =
     (1 - reducePercentage / 100) * textInput.split(" ").length;
 
-  console.log("word count: ", wordsReduce);
-
   try {
-    const response = await fetch("http://localhost:3000/process", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text: textInput,
-        wordCount: wordsReduce,
-      }),
-    });
+    const response = await fetch(
+      "https://us-central1-reducetext-429111.cloudfunctions.net/ReduceThis",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: textInput,
+          wordCount: wordsReduce,
+        }),
+      }
+    );
 
     const result = await response.json();
     const range = selection.getRangeAt(0);
